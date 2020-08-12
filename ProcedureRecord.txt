@@ -1,0 +1,42 @@
+1. Create models according to design
+- use entity framework
+	- DB Context class
+	- OnConfiguration and OnModeling method for entity relationship create and
+	  initialization
+	- Use IDesignTimeDbContextFactory to generate new SimpleTraderDbContext
+	- Why use this function? intead of just create a static instance in
+	  DbConext class? Dependent injection? it's important right?
+	- Give a pure class and do all stuff around it no in it
+2. Create Data Sevice
+- Create a IDataService interface
+ - Use interface to make code more extensible
+ - Task<T> make it more flexible and reduce code for all kind of entity
+- Create a generic data service implement interface IDataService
+ - Create a readonly dbcontext factory instance, then use instance to create
+   new db context instance
+ - CRUD code implemented, using(){} function
+ - Use context.Set<T>.Add/ToList/FirstOrDefault/Update/Remove
+3. Create WPF View and View Model
+- Home, Portolio view model inheri from ViewModelBase
+- MainViewModel inherit from viewmodelbase
+- MainViewModel has a Navigator
+- Generate Navigator interface and class
+ - Has current View model
+ - Has a Update current view model command
+- Create a resouce dictionay as Common.xaml for style implemention
+- Create a NavigationBar.xaml control for navigationbar function
+ - use row definition
+ - use column definition in row 2
+ - use static Brush to decorate the color to current navigationbar
+- Mainviewwindow use NagivationBar as a controls imported from other namespace
+- Mainviewwindows Use Navigator to decide current view model as contentcontrol
+- Add a command to update viewmodel of current Navigator
+- Add a ObservableObject class to use INotifyPeopertyChanged function
+- NavigatorBar combine with Navigator class and udpatecurretnviewmodelcommand
+4. Use a data template mapping to map viewmodel to view
+5. Create something for homeviewmodel
+- Create a IMajorIndex service to get data from financialmodelingprep website
+- Create a Service project use http/json deserialize to get data from website
+- Homeviewmodel has a MajorIndexViewModel
+- When MajorIndeViewModel creating, use LoadMajorIndexViwModel to load current
+  view data from website
