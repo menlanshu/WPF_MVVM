@@ -15,8 +15,15 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Text="Simple Trader" Background="{StaticResource BrushPrimary1}"/>
-        <Grid Grid.Row="1" Background="{StaticResource BrushPrimary2}">
+        <TextBlock Grid.Row="0" Padding="10" FontSize="28"  Foreground="White"
+                   Text="Simple Trader" Background="{StaticResource BrushPrimary1}"/>
+        <Grid Grid.Row="1" RenderOptions.EdgeMode="Aliased" Background="{StaticResource BrushPrimary2}">
+
+            <Grid.Resources>
+                <!--All radio button witll use this template as format-->
+                <Style TargetType="RadioButton" BasedOn="{StaticResource NavButton}" ></Style>
+            </Grid.Resources>
+            
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
@@ -25,6 +32,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
+<!--Stype = {staticresource}-->
             <RadioButton Grid.Column="0" Content="Home" Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static navs:ViewType.Home}" />
             <RadioButton Grid.Column="1" Content="Portfolio" Command="{Binding UpdateCurrentViewModelCommand}" CommandParameter="{x:Static navs:ViewType.Portfolio}" />
             <RadioButton Grid.Column="2" Content="Buy" />
