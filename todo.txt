@@ -1,0 +1,1 @@
+Use list for MajorIndex instead of many Fields? But how to binding a list?
