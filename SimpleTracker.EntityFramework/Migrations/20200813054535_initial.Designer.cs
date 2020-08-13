@@ -9,8 +9,8 @@ using SimpleTracker.EntityFramework;
 namespace SimpleTracker.EntityFramework.Migrations
 {
     [DbContext(typeof(SimpleTraderDbContext))]
-    [Migration("20200810134916_Initial")]
-    partial class Initial
+    [Migration("20200813054535_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -98,7 +98,7 @@ namespace SimpleTracker.EntityFramework.Migrations
                         .WithMany("AssertTransactions")
                         .HasForeignKey("AccountId");
 
-                    b.OwnsOne("SimpleTrader.Domain.Models.Stock", "Stock", b1 =>
+                    b.OwnsOne("SimpleTrader.Domain.Models.Assert", "Assert", b1 =>
                         {
                             b1.Property<int>("AssertTransactionId")
                                 .HasColumnType("INTEGER");

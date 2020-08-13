@@ -34,7 +34,7 @@ namespace SimpleTracker.EntityFramework
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Stock wants to be embedded in AssertTransction table
-            modelBuilder.Entity<AssertTransaction>().OwnsOne(a => a.Stock);
+            modelBuilder.Entity<AssertTransaction>().OwnsOne(a => a.Assert);
 
             base.OnModelCreating(modelBuilder);
         }

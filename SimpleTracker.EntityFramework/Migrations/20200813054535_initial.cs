@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SimpleTracker.EntityFramework.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -51,8 +51,8 @@ namespace SimpleTracker.EntityFramework.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     AccountId = table.Column<int>(nullable: true),
                     IsPurchase = table.Column<bool>(nullable: false),
-                    Stock_Symbol = table.Column<string>(nullable: true),
-                    Stock_PricePerShare = table.Column<double>(nullable: true),
+                    Assert_Symbol = table.Column<string>(nullable: true),
+                    Assert_PricePerShare = table.Column<double>(nullable: true),
                     Shares = table.Column<int>(nullable: false),
                     DateProcessed = table.Column<DateTime>(nullable: false)
                 },
