@@ -17,7 +17,7 @@ namespace SimpleTrader.FinancialModelingPrepAPI.Services
         {
             using(FInancialModelingPrepHttpClient client = new FInancialModelingPrepHttpClient())
             {
-                string uri = $"stock/real-time-price/{symbol}?apikey=demo";
+                string uri = $"stock/real-time-price/{symbol}?apikey=6986ededa1c12a3f6a07798afffd69ed";
 
                 StockPriceResult stockPriceResult = await client.GetAsync<StockPriceResult>(uri);
 

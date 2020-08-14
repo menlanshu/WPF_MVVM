@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using SimpleTracker.EntityFramework.Services.Common;
 using SimpleTrader.Domain.Models;
 using SimpleTrader.Domain.Services;
@@ -11,18 +10,17 @@ using System.Threading.Tasks;
 
 namespace SimpleTracker.EntityFramework.Services
 {
-    public class GenericDataService<T> : IDataService<T> where T : DomainObject
+    public class AccountDataService : IDataService<Account>
     {
         private readonly SimpleTraderDbContextFactory _contextFactory;
-        private readonly NonQueryDataService<T> _nonQueryDataService;
+        private readonly NonQueryDataService<Account> _nonQueryDataService;
 
-        public GenericDataService(SimpleTraderDbContextFactory contextFactory)
+        public AccountDataService(SimpleTraderDbContextFactory contextFactory)
         {
             _contextFactory = contextFactory;
-            _nonQueryDataService = new NonQueryDataService<T>(contextFactory);
+            _nonQueryDataService = new NonQueryDataService<Account>(contextFactory);
         }
-
-        public async Task<T> Create(T entity)
+        public async Task<Account> Create(Account entity)
         {
             return await _nonQueryDataService.Create(entity);
         }
@@ -32,27 +30,27 @@ namespace SimpleTracker.EntityFramework.Services
             return await _nonQueryDataService.Delete(id);
         }
 
-        public async Task<T> Get(int id)
+        public async Task<Account> Get(int id)
         {
-            using(SimpleTraderDbContext context = _contextFactory.CreateDbContext())
+            using (SimpleTraderDbContext context = _contextFactory.CreateDbContext())
             {
-                T entity = await context.Set<T>().FirstOrDefaultAsync((e) => e.Id == id);
+                Account entity = await context.Accounts.Include(x => x.AssertTransactions).FirstOrDefaultAsync((e) => e.Id == id);
 
                 return entity;
             }
         }
 
-        public async Task<IEnumerable<T>> GetAll()
+        public async Task<IEnumerable<Account>> GetAll()
         {
-            using(SimpleTraderDbContext context = _contextFactory.CreateDbContext())
+            using (SimpleTraderDbContext context = _contextFactory.CreateDbContext())
             {
-                IEnumerable<T> entities = await context.Set<T>().ToListAsync();
+                IEnumerable<Account> entities = await context.Accounts.Include(x => x.AssertTransactions).ToListAsync();
 
                 return entities;
             }
         }
 
-        public async Task<T> Update(int id, T entity)
+        public async Task<Account> Update(int id, Account entity)
         {
             return await _nonQueryDataService.Update(id, entity);
         }
