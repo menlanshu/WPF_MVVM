@@ -1,6 +1,7 @@
 ﻿using SimpleTrader.FinancialModelingPrepAPI.Services;
 using SimpleTrader.WPF.State.Navigators;
 using SimpleTrader.WPF.ViewModels;
+using SimpleTrader.WPF.ViewModels.Factories;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,11 +13,13 @@ namespace SimpleTrader.WPF.Commands
     {
         public event EventHandler CanExecuteChanged;
 
-        private INavigator _navigator;
+        private readonly INavigator _navigator;
+        private readonly ISimpleTraderViewModelFactory _viewModelFactory;
 
-        public UpdateCurrentViewModelCommand(INavigator navigator)
+        public UpdateCurrentViewModelCommand(INavigator navigator, ISimpleTraderViewModelFactory viewModelFactory)
         {
             _navigator = navigator;
+            _viewModelFactory = viewModelFactory;
         }
 
         public bool CanExecute(object parameter)
@@ -29,17 +32,7 @@ namespace SimpleTrader.WPF.Commands
             if(parameter is ViewType)
             {
                 ViewType viewType = (ViewType)parameter;
-                switch (viewType)
-                {
-                    case ViewType.Home:
-                        _navigator.CurrentViewModel = new HomeViewModel(MajorIndexListingViewModel.LoadMajorIndexViwModel(new MajorIndexService()));
-                        break;
-                    case ViewType.Portfolio:
-                        _navigator.CurrentViewModel = new PortfolioViewModel();
-                        break;
-                    default:
-                        break;
-                }
+                _navigator.CurrentViewModel = _viewModelFactory.CreateViewModel(viewType);
             }
         }
     }

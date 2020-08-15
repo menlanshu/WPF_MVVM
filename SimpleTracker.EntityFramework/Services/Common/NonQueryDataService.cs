@@ -10,7 +10,7 @@ namespace SimpleTracker.EntityFramework.Services.Common
 {
     public class NonQueryDataService<T>  where T : DomainObject
     {
-        private readonly SimpleTraderDbContextFactory _contextFactory;
+        protected readonly SimpleTraderDbContextFactory _contextFactory;
 
         public NonQueryDataService(SimpleTraderDbContextFactory contextFactory)
         {

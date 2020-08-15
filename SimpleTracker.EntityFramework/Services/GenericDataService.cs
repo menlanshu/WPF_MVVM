@@ -11,25 +11,10 @@ using System.Threading.Tasks;
 
 namespace SimpleTracker.EntityFramework.Services
 {
-    public class GenericDataService<T> : IDataService<T> where T : DomainObject
+    public class GenericDataService<T> : NonQueryDataService<T>, IDataService<T> where T : DomainObject
     {
-        private readonly SimpleTraderDbContextFactory _contextFactory;
-        private readonly NonQueryDataService<T> _nonQueryDataService;
-
-        public GenericDataService(SimpleTraderDbContextFactory contextFactory)
+        public GenericDataService(SimpleTraderDbContextFactory contextFactory) : base(contextFactory)
         {
-            _contextFactory = contextFactory;
-            _nonQueryDataService = new NonQueryDataService<T>(contextFactory);
-        }
-
-        public async Task<T> Create(T entity)
-        {
-            return await _nonQueryDataService.Create(entity);
-        }
-
-        public async Task<bool> Delete(int id)
-        {
-            return await _nonQueryDataService.Delete(id);
         }
 
         public async Task<T> Get(int id)
@@ -50,11 +35,6 @@ namespace SimpleTracker.EntityFramework.Services
 
                 return entities;
             }
-        }
-
-        public async Task<T> Update(int id, T entity)
-        {
-            return await _nonQueryDataService.Update(id, entity);
         }
     }
 }

@@ -12,6 +12,14 @@ namespace SimpleTrader.Domain.Services.TransactionServices
         private readonly IStockPriceService _stockPriceService;
         private readonly IDataService<Account> _accountService;
 
+        /// <summary>
+        /// We need to get the price of the stock
+        /// We need save trasaction to db
+        /// We need re-calculate the balance that remained of the buyer
+        /// So we need IDataService and IStockPriceService
+        /// </summary>
+        /// <param name="stockPriceService"></param>
+        /// <param name="accountService"></param>
         public BuyStockService(IStockPriceService stockPriceService, IDataService<Account> accountService)
         {
             _stockPriceService = stockPriceService;
@@ -32,7 +40,7 @@ namespace SimpleTrader.Domain.Services.TransactionServices
             }
 
             //Create a new assert transaction
-            //Id will be set automatically when we insert into database
+            //Id will be generated automatically when we insert into database
             AssertTransaction transaction = new AssertTransaction()
             {
                 Account = buyer,
@@ -50,6 +58,7 @@ namespace SimpleTrader.Domain.Services.TransactionServices
             buyer.AssertTransactions.Add(transaction);
             buyer.Balance -= transactionPrice;
 
+            // Update account info to DB
             await _accountService.Update(buyer.Id, buyer);
 
             return buyer;
