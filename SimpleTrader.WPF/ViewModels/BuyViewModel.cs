@@ -25,6 +25,19 @@ namespace SimpleTrader.WPF.ViewModels
 			}
 		}
 
+		private string _searchResultSymbol = string.Empty;
+
+		public string SearchResultSymbol
+		{
+			get { return _searchResultSymbol;}
+			set
+			{
+				_searchResultSymbol = value;
+				OnPropertyChanged(nameof(SearchResultSymbol));
+			}
+		}
+
+
 
 		private double _stockPrice;
 

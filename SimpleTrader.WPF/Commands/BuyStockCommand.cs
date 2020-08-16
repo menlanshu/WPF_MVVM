@@ -38,7 +38,6 @@ namespace SimpleTrader.WPF.Commands
                     AssertTransactions = new List<AssertTransaction>()
                 }, _buyViewModel.Symbol, _buyViewModel.SharesToBuy);
 
-
             }
             catch (Exception e)
             {
