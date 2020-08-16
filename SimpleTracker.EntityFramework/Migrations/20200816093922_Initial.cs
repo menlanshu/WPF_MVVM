@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SimpleTracker.EntityFramework.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,7 +15,7 @@ namespace SimpleTracker.EntityFramework.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Email = table.Column<string>(nullable: true),
                     UserName = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
+                    PasswordHash = table.Column<string>(nullable: true),
                     DatedJoined = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>

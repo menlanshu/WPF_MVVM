@@ -1,8 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using SimpleTracker.EntityFramework;
 using SimpleTracker.EntityFramework.Services;
 using SimpleTrader.Domain.Models;
 using SimpleTrader.Domain.Services;
+using SimpleTrader.Domain.Services.AuthenticationServices;
 using SimpleTrader.Domain.Services.TransactionServices;
 using SimpleTrader.FinancialModelingPrepAPI.Services;
 using SimpleTrader.WPF.State.Navigators;
@@ -42,6 +44,9 @@ namespace SimpleTrader.WPF
 
             //Dependency injection
             IServiceProvider serviceProvider = CreateServiceProvider();
+            IAuthenticationService authentication = serviceProvider.GetRequiredService<IAuthenticationService>();
+            //authentication.Register("Test@gmail.com", "SingletonSean", "Test123", "Test123");
+            authentication.Login("SingletonSean", "Test123");
 
             //GetRequiredService will throw exception if no this type service is registered
             //GetService will reply null instead
@@ -66,15 +71,14 @@ namespace SimpleTrader.WPF
         {
             IServiceCollection services = new ServiceCollection();
 
-
             //Singleton - One instance per application
             //Transient - different instance everytime
             //AddScopd - one instance per "scope"
             services.AddSingleton<SimpleTraderDbContextFactory>();
             services.AddSingleton<IDataService<Account>, AccountDataService>();
+            services.AddSingleton<IAccountService, AccountDataService>();
             services.AddSingleton<IStockPriceService, StockPriceService>();
             services.AddSingleton<IBuyStockService, BuyStockService>();
-
 
             // Add WPF view Model to service provider too
             services.AddScoped<MainViewModel>();
@@ -84,12 +88,15 @@ namespace SimpleTrader.WPF
             services.AddSingleton<ISimpleTraderViewModelFactory, SimpleTraderViewModelFactory>();
             services.AddSingleton<IMajorIndexService, MajorIndexService>();
 
-
             // Register main window
             // We need use func for this registion becasue we use object as parameter in MainView constructor instead of MainViewModel
             // So we need add a func here to specify the view model
             // We can create a factory for MainViewModel too? Right?
             services.AddScoped<MainWindow>(s => new MainWindow(s.GetRequiredService<MainViewModel>()));
+
+            // Register Service for authentication
+            services.AddSingleton<IAuthenticationService, AuthenticationService>();
+            services.AddSingleton<IPasswordHasher, PasswordHasher>();
 
             return services.BuildServiceProvider();
 
