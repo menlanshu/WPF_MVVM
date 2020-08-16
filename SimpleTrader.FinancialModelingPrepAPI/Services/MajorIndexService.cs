@@ -13,9 +13,9 @@ namespace SimpleTrader.FinancialModelingPrepAPI.Services
     {
         public async Task<MajorIndex> GetMajorIndex(MajorIndexType indexType)
         {
-            using(FInancialModelingPrepHttpClient client = new FInancialModelingPrepHttpClient())
+            using (FinancialModelingPrepHttpClient client = FinancialModelingPrepHttpFactory.CreateFinancialModelingPrepHttpClient())
             {
-                string uri = $"majors-indexes/{GetUriSuffix(indexType)}?apikey=6986ededa1c12a3f6a07798afffd69ed";
+                string uri = $"majors-indexes/{GetUriSuffix(indexType)}";
 
                 //client.GetAsync("https://financialmodelingprep.com/api/v3/majors-indexes?apikey=6986ededa1c12a3f6a07798afffd69ed");
                 MajorIndex majorIndex= await client.GetAsync<MajorIndex>(uri);

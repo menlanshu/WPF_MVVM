@@ -79,6 +79,7 @@ namespace SimpleTrader.WPF
             // Add WPF view Model to service provider too
             services.AddScoped<MainViewModel>();
             services.AddScoped<INavigator, Navigator>();
+            services.AddScoped<BuyViewModel>();
 
             services.AddSingleton<ISimpleTraderViewModelFactory, SimpleTraderViewModelFactory>();
             services.AddSingleton<IMajorIndexService, MajorIndexService>();
