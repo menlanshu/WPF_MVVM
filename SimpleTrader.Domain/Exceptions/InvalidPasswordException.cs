@@ -7,25 +7,25 @@ namespace SimpleTrader.Domain.Exceptions
 {
     public class InvalidPasswordException : Exception
     {
-        private readonly string _username;
-        private readonly string _password;
+        public string UserName { get; }
+        public string Password { get; }
 
         public InvalidPasswordException(string username, string password)
         {
-            _username = username;
-            _password = password;
+            UserName = username;
+            Password = password;
         }
 
         public InvalidPasswordException(string message, string username, string password) : base(message)
         {
-            _username = username;
-            _password = password;
+            UserName = username;
+            Password = password;
         }
 
         public InvalidPasswordException(string message, Exception innerException, string username, string password) : base(message, innerException)
         {
-            _username = username;
-            _password = password;
+            UserName = username;
+            Password = password;
         }
     }
 }

@@ -25,6 +25,11 @@ namespace SimpleTrader.Domain.Services.AuthenticationServices
             // Get Account from database from username
             Account storedAccount = await _accountDataService.GetByUserName(username);
 
+            if(storedAccount == null)
+            {
+                throw new UserNotFoundException(username);
+            }
+
             // Compare password hash with password hash from db
             PasswordVerificationResult passwordVerification = _passwordHasher.VerifyHashedPassword(storedAccount.AccountHolder.PasswordHash, password);
 
